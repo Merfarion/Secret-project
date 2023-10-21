@@ -5,7 +5,7 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
-    [SerializeField]private float jumpForce = 10f;
+    [SerializeField]private float jumpForce = 4f;
     // Start is called before the first frame update
    
 private Rigidbody2D rb;
@@ -16,6 +16,8 @@ private void Awake()
     rb = GetComponent<Rigidbody2D>();
     sprite = GetComponentInChildren<SpriteRenderer>();
 }
+
+    
    
    private void FixedUpdate()
    {
@@ -25,7 +27,7 @@ private void Awake()
     {
         if (Input.GetButton("Horizontal"))
         Run();
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (isGrounded && Input.GetButtonDown("Jump") && (gameObject.tag=="One leg" || gameObject.tag=="two legs"))
         Jump();
     }
 
@@ -33,18 +35,23 @@ private void Run()
 {
     Vector3 dir = transform.right * Input.GetAxis("Horizontal");
     transform.position = Vector3.MoveTowards(transform.position,transform.position + dir, speed * Time.deltaTime);
-sprite.flipX = dir.x <0.0f; 
+    sprite.flipX = dir.x < 0.0f; 
 }
    
 private void Jump()
 {
-rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+    if (gameObject.tag == "two legs"){
+        rb.AddForce(transform.up * jumpForce*2, ForceMode2D.Impulse);
+    } // переделать 
+    else{
+    rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+    }
 }
 
 private void CheckGround()
 {
-    Collider2D[]collider  = Physics2D.OverlapCircleAll(transform.position, 0.3f);
-    isGrounded = collider.Length >1;
+    Collider2D[]collider = Physics2D.OverlapCircleAll(transform.position, 0.3f);
+    isGrounded = collider.Length > 1;
 }
    
     void Start()

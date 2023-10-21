@@ -6,6 +6,14 @@ TagManager:
   tags:
   - Item
   - Trap
+  - Head
+  - One arm
+  - Two arm
+  - One leg
+  - two legs
+  - Full Body
+  - Leg
+  - Ladder
   layers:
   - Default
   - TransparentFX
