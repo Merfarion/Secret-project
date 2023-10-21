@@ -11,6 +11,7 @@ public class Hero : MonoBehaviour
 private Rigidbody2D rb;
 private SpriteRenderer sprite;
 private bool isGrounded = false;
+[SerializeField] private AudioSource jumpEffect;
 private void Awake()
 {
     rb = GetComponent<Rigidbody2D>();
@@ -40,10 +41,13 @@ private void Run()
    
 private void Jump()
 {
+    
     if (gameObject.tag == "two legs"){
+        jumpEffect.Play();
         rb.AddForce(transform.up * jumpForce*2, ForceMode2D.Impulse);
     } // переделать 
     else{
+        jumpEffect.Play();
     rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 }

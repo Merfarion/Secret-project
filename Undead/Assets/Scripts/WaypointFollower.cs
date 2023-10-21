@@ -14,6 +14,7 @@ public class WaypointFollower : MonoBehaviour
     {
         if (Vector2.Distance(waypoints[currentWaypointIndex].transform.position, transform.position) < .1f)
         {
+            StartCoroutine("Delay");
             currentWaypointIndex++;
             if (currentWaypointIndex >= waypoints.Length)
             {
@@ -21,5 +22,9 @@ public class WaypointFollower : MonoBehaviour
             }
         }
         transform.position = Vector2.MoveTowards(transform.position,waypoints[currentWaypointIndex].transform.position, Time.deltaTime * speed);
+    }
+
+    private IEnumerator Delay(){
+        yield return new WaitForSeconds(2);
     }
 }

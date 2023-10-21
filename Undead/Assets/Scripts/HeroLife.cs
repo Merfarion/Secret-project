@@ -7,13 +7,19 @@ public class HeroLife : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
+    [SerializeField] private AudioSource deathSoundEffect;
     // Start is called before the first frame update
    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         // anim = GetComponent<Animator>();
+        
     }
 
+    private IEnumerator Delay(){
+        yield return new WaitForSeconds(1);
+        RestartLevel();
+    }
     // Update is called once per frame
     private void OnCollisionEnter2D(Collision2D collision) {
         if(collision.gameObject.CompareTag("Trap")){
@@ -22,9 +28,11 @@ public class HeroLife : MonoBehaviour
     }
 
     private void Die(){
+        deathSoundEffect.Play();
+        StartCoroutine("Delay");
         rb.bodyType = RigidbodyType2D.Static;
         //anim.SetTrigger("death");
-        RestartLevel();
+        //
     }
 
     private void RestartLevel(){
