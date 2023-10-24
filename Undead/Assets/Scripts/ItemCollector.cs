@@ -8,9 +8,9 @@ using UnityEngine.UI;
 
 public class ItemCollector : MonoBehaviour
 {
-    private int items = 0;
+    //private int items = 0;
     private string collision_tag = "";
-    [SerializeField] private TMP_Text itemsText;
+   // [SerializeField] private TMP_Text itemsText;
 
    private void OnTriggerEnter2D(Collider2D collision) {
     collision_tag = collision.gameObject.tag;
@@ -19,9 +19,9 @@ public class ItemCollector : MonoBehaviour
         case "Leg":
            { 
             Destroy(collision.gameObject);
-            items++;
-            Debug.Log("Items: " + items);
-            itemsText.text = "Items: " + items;
+            //items++;
+            //Debug.Log("Items: " + items);
+            //itemsText.text = "Items: " + items;
             if (gameObject.tag == "One leg")
             {
                 gameObject.tag = "two legs";
@@ -36,10 +36,10 @@ public class ItemCollector : MonoBehaviour
         case "Arm":
            { 
             Destroy(collision.gameObject);
-            items++;
-            Debug.Log("Items: " + items);
-            itemsText.text = "Items: " + items;
-            if (gameObject.tag == "One arm")
+           //items++;
+            //Debug.Log("Items: " + items);
+            //itemsText.text = "Items: " + items;
+            if (gameObject.tag == "One leg")
             {
                 gameObject.tag = "Two arms";
             }

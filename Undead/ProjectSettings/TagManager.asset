@@ -14,6 +14,7 @@ TagManager:
   - Full Body
   - Leg
   - Ladder
+  - Arm
   layers:
   - Default
   - TransparentFX

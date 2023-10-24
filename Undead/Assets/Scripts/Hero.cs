@@ -7,7 +7,9 @@ public class Hero : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField]private float jumpForce = 4f;
     // Start is called before the first frame update
-   
+   [SerializeField] private Sprite [] run;
+   SpriteRenderer sr;
+   private float lastCadr;
 private Rigidbody2D rb;
 private SpriteRenderer sprite;
 private bool isGrounded = false;
@@ -28,7 +30,8 @@ private void Awake()
     {
         if (Input.GetButton("Horizontal"))
         Run();
-        if (isGrounded && Input.GetButtonDown("Jump") && (gameObject.tag=="One leg" || gameObject.tag=="two legs"))
+        else 
+        if (isGrounded && Input.GetButtonDown("Jump") && (gameObject.tag=="One leg" || gameObject.tag=="two legs"|| gameObject.tag=="Two arms"))
         Jump();
     }
 
@@ -36,7 +39,10 @@ private void Run()
 {
     Vector3 dir = transform.right * Input.GetAxis("Horizontal");
     transform.position = Vector3.MoveTowards(transform.position,transform.position + dir, speed * Time.deltaTime);
-    sprite.flipX = dir.x < 0.0f; 
+    sprite.flipX = dir.x < 0.0f;
+    lastCadr+=Time.deltaTime*10;
+    lastCadr = lastCadr%run.Length;
+    sr.sprite = run[(int)lastCadr];
 }
    
 private void Jump()
@@ -44,7 +50,7 @@ private void Jump()
     
     if (gameObject.tag == "two legs"){
         jumpEffect.Play();
-        rb.AddForce(transform.up * jumpForce*2, ForceMode2D.Impulse);
+        rb.AddForce(transform.up * jumpForce*1.5f, ForceMode2D.Impulse);
     } // переделать 
     else{
         jumpEffect.Play();
@@ -60,7 +66,7 @@ private void CheckGround()
    
     void Start()
     {
-        
+        sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
